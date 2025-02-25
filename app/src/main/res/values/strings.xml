@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Users Task</string>
+
+    <string name="acsb_user_leading_icon_description">User Icon</string>
+    <string name="acsb_user_trailing_icon_description">Navigate to details</string>
+    <string name="acsb_user_supporting_icon_description">Email Icon</string>
+    <string name="user_id_template">User\'s id: %s</string>
+
+    <string name="current_data_source_type_template">Data got from: %s</string>
+
+    <string name="data_source_type_none">None</string>
+    <string name="data_source_type_local">Local database</string>
+    <string name="data_source_type_remote">API call</string>
+
+    <string name="user_list_cant_be_fetched">App is unavailable due to an API error. Check your internet connection or API configuration</string>
+    <string name="user_list_update_button_text">Retry</string>
+
+    <string name="user_cant_be_fetched">User can\'t be found, as API is unavailable and there is no cached data</string>
+    <string name="user_data_general_title">About %s</string>
+    <string name="user_data_company_title">About their company</string>
+    <string name="user_data_address_title">About their address</string>
+    <string name="user_data_geo_title">Their position in realtime</string>
+
+    <string name="acsb_user_data_icon_open">Open details</string>
+    <string name="acsb_user_data_icon_close">Close details</string>
+
+    <string name="user_data_save_button_text">Save user data locally</string>
+    <string name="user_data_saved_user_message">Successfully saved %s\'s data!</string>
+
+    <string name="user_data_user_id">ID: %1$d</string>
+    <string name="user_data_username">Username: %1$s</string>
+    <string name="user_data_email">Email: %1$s</string>
+    <string name="user_data_phone">Phone: %1$s</string>
+    <string name="user_data_website">Website: %1$s</string>
+    <string name="user_data_address_street">Street: %1$s</string>
+    <string name="user_data_address_suite">Suite: %1$s</string>
+    <string name="user_data_address_city">City: %1$s</string>
+    <string name="user_data_address_zipcode">Zipcode: %1$s</string>
+    <string name="user_data_geo_lat">Lat: %1$s</string>
+    <string name="user_data_geo_lng">Lng: %1$s</string>
+    <string name="user_data_company_name">Name: %1$s</string>
+    <string name="user_data_company_catch_phrase">Catch Phrase: %1$s</string>
+    <string name="user_data_company_bs">BS: %1$s</string>
+    <string name="user_data_navigate_back_button">Go back</string>
+</resources>
