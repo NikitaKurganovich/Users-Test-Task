@@ -6,11 +6,18 @@ import dev.babananick.userstask.feature.userlist.UserListViewModel
 import dev.babananick.userstask.feature.userlist.model.UserListUiEvent
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.test.runTest
+import org.junit.Before
 import org.junit.Test
 
 class UserListVMTest {
-    private val fakeUserRepository = FakeUserRepository()
-    private val userListVM = UserListViewModel(fakeUserRepository)
+    private lateinit var fakeUserRepository: FakeUserRepository
+    private lateinit var userListVM: UserListViewModel
+
+    @Before
+    fun setUp(){
+        fakeUserRepository = FakeUserRepository()
+        userListVM = UserListViewModel(fakeUserRepository)
+    }
 
     @Test
     fun `check initial state and update list`() = runTest {
@@ -18,7 +25,9 @@ class UserListVMTest {
             val initialState = awaitItem()
             assert(initialState.isLoading)
             assert(initialState.userList.isEmpty())
-            userListVM.dispatch(UserListUiEvent.UpdateList)
+        }
+        userListVM.dispatch(UserListUiEvent.UpdateList)
+        userListVM.stateFlow.test {
             val finalState = awaitItem()
             assert(!finalState.isLoading)
             assert(finalState.userList.isNotEmpty())
@@ -26,26 +35,34 @@ class UserListVMTest {
     }
 
     @Test
+    fun `check if loading on retry`() = runTest {
+        userListVM.dispatch(UserListUiEvent.Retry)
+        userListVM.stateFlow.test {
+            assertEquals(true, awaitItem().isLoading)
+        }
+    }
+
+    @Test
     fun `check data similarity`() = runTest {
+        val repositoryData = fakeUserRepository.getSimplifiedUsers().getOrNull()?.data
         userListVM.stateFlow.test {
             skipItems(1)
-            val repositoryData = fakeUserRepository.getSimplifiedUsers().getOrNull()?.data
             assertEquals(repositoryData, awaitItem().userList)
         }
     }
 
     @Test
     fun `check doubling data in fake repository`() = runTest {
+        val repositoryData = fakeUserRepository.getSimplifiedUsers().getOrNull()?.data
+        val doubleList = buildList {
+            if (repositoryData != null) {
+                addAll(repositoryData)
+                addAll(repositoryData)
+            }
+        }
+        userListVM.dispatch(UserListUiEvent.UpdateList)
         userListVM.stateFlow.test {
             skipItems(1)
-            userListVM.dispatch(UserListUiEvent.UpdateList)
-            val repositoryData = fakeUserRepository.getSimplifiedUsers().getOrNull()?.data
-            val doubleList = buildList {
-                if (repositoryData != null) {
-                    addAll(repositoryData)
-                    addAll(repositoryData)
-                }
-            }
             assertEquals(doubleList, awaitItem().userList)
         }
     }

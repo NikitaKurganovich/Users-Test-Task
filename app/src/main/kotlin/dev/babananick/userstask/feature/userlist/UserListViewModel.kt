@@ -58,8 +58,8 @@ class UserListViewModel(
     }
 
     private fun refreshList(){
+        reduceState { it.copy(isRefreshing = true) }
         viewModelScope.launch {
-            reduceState { it.copy(isRefreshing = true) }
             fetchList()
         }
     }
